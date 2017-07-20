@@ -1,0 +1,16 @@
+piprline {
+    agent any
+    stages {
+        stage ('Deploy'){
+            steps {
+                retry(3) {
+                    sh './opt/test-health.sh'
+                }
+
+                timeout (time:3, unit: 'MINUTES'){
+                    sh './opt/health-check.sh'
+                }
+            }
+        }
+    }
+}
